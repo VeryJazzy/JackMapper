@@ -18,7 +18,7 @@
     "towards": "Romford",
     "expectedArrival": "2021-02-28T11:15:04Z",
     "timeToLive": "2021-02-28T11:15:34Z",
-    "modeName": "bus",
+    "modeName": "jsonBus",
     "timing": {
         "$type": "Tfl.Api.Presentation.Entities.PredictionTiming, Tfl.Api.Presentation.Entities",
         "countdownServerAdjustment": "-00:00:06.6007006",
@@ -48,7 +48,7 @@
     "towards": "Romford",
     "expectedArrival": "2021-02-28T11:05:09Z",
     "timeToLive": "2021-02-28T11:05:39Z",
-    "modeName": "bus",
+    "modeName": "jsonBus",
     "timing": {
         "$type": "Tfl.Api.Presentation.Entities.PredictionTiming, Tfl.Api.Presentation.Entities",
         "countdownServerAdjustment": "-00:00:06.6550627",

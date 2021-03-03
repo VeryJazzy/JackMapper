@@ -1,72 +1,67 @@
 package BusApp;
 
-import java.util.HashMap;
-import java.util.Map;
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Bus {
 
-    @JsonProperty("lineName")
-    private String busNumber;
-    @JsonProperty("towards")
-    private String towards;
-    @JsonProperty("expectedArrival")
-    private String expectedArrival;
+    private String name;
+    private List<Integer> howLongs = new ArrayList<>();
 
-    @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
-
-    @JsonProperty("lineName")
-
-    public String getBusNumber() {
-        return busNumber;
+    public Bus(String name) {
+        this.name = name;
     }
 
-    @JsonProperty("lineName")
-    public void setBusNumber(String busNumber) {
-        this.busNumber = busNumber;
+
+
+
+    public String getName() {
+        return name;
     }
 
-    @JsonProperty("towards")
-    public String getTowards() {
-        return towards;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    @JsonProperty("towards")
-    public void setTowards(String towards) {
-        this.towards = towards;
+    public List<Integer> getHowLongs() {
+        return howLongs;
     }
 
-    @JsonProperty("expectedArrival")
-    public String getExpectedArrival() {
-        return expectedArrival;
-    }
-
-    @JsonProperty("expectedArrival")
-    public void setExpectedArrival(String expectedArrival) {
-        this.expectedArrival = expectedArrival;
-    }
-
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
-
-    @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
+    public void addTime(int time) {
+        howLongs.add(time);
     }
 
     @Override
     public String toString() {
-        return "bus name: " + busNumber + "\n" +
-                "direction : " + towards + "\n" +
-                "arrival time: " + expectedArrival;
+      return name;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof Bus)) {
+            return false;
+        }
 
+        Bus busO = (Bus) o;
+        if (this.name.equals(busO.name)) {
+            return true;
+        }
+        return false;
+    }
 
+    public String getInfo() {
+        StringBuilder info = new StringBuilder(this.name + ": ");
+
+        for (int i = 0; i < howLongs.size(); i++) {
+            if (i == howLongs.size() - 1) {
+                info.append(howLongs.get(i)).append(" minutes");
+                continue;
+            }
+            info.append(howLongs.get(i)).append(", ");
+        }
+        return info.toString();
+    }
 }

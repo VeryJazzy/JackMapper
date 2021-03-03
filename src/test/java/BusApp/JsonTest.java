@@ -18,13 +18,13 @@ class JsonTest {
 
     @Test
     void parseJsonReturnsCorrectBusesAndInfo() {
-        List<Bus> busList = Json.parseJson(testJson);
-        assertEquals(busList.get(0).getBusNumber(), "103");
-        assertEquals(busList.get(0).getTowards(), "Romford");
-        assertEquals(busList.get(0).getExpectedArrival(), "2021-02-28T11:15:04Z");
-        assertEquals(busList.get(1).getBusNumber(), "499");
-        assertEquals(busList.get(1).getTowards(), "Romford");
-        assertEquals(busList.get(1).getExpectedArrival(), "2021-02-28T11:05:09Z");
+        List<JsonBus> jsonBusList = Json.parseJson(testJson);
+        assertEquals(jsonBusList.get(0).getName(), "103");
+        assertEquals(jsonBusList.get(0).getTowards(), "Romford");
+        assertEquals(jsonBusList.get(0).getExpectedArrival(), "2021-02-28T11:15:04Z");
+        assertEquals(jsonBusList.get(1).getName(), "499");
+        assertEquals(jsonBusList.get(1).getTowards(), "Romford");
+        assertEquals(jsonBusList.get(1).getExpectedArrival(), "2021-02-28T11:05:09Z");
     }
 
 }
