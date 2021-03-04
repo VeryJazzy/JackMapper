@@ -12,7 +12,6 @@ public class MainController {
 
     @GetMapping("/getBuses")
     public String getBuses(Model model) {
-
         ArrayList<Bus> morayWayList = getBuses("https://api.tfl.gov.uk/StopPoint/490010016S/Arrivals");
         model.addAttribute("morayWay",morayWayList);
         ArrayList<Bus> belleVueList = getBuses("https://api.tfl.gov.uk/StopPoint/490003843W/Arrivals");
