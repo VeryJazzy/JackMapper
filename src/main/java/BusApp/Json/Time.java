@@ -1,4 +1,4 @@
-package BusApp;
+package BusApp.Json;
 
 import java.time.Duration;
 import java.time.LocalTime;
@@ -9,19 +9,18 @@ public class Time {
         return LocalTime.now();
     }
 
-    static LocalTime parseTime(String expectedArrival) {
+    public static LocalTime parseTime(String expectedArrival) {
         int hour = Integer.parseInt(expectedArrival.substring(11,13));
         int minute = Integer.parseInt(expectedArrival.substring(14,16));
         int seconds = Integer.parseInt(expectedArrival.substring(17,19));
         return LocalTime.of(hour, minute, seconds);
     }
 
-    static Long getDifference(LocalTime expected, LocalTime current) {
-        long difference =  Math.abs(Duration.between(expected, current).toMinutes());
-        return difference;
+    public static Long getDifference(LocalTime expected, LocalTime current) {
+        return Math.abs(Duration.between(expected, current).toMinutes());
     }
 
-    static int howLong(String expectedArrival) {
+    public static int howLong(String expectedArrival) {
         LocalTime expected = parseTime(expectedArrival);
 
         int difference = Math.toIntExact(getDifference(expected, LocalTime.now()));

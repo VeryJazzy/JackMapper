@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <title>Journal</title>
+    <link rel="stylesheet" href="/css/standard.css">
+</head>
+
+
+<body>
+<header>
+    <h1>Bus App</h1>
+</header>
+
+<a class="buttons" href="getBuses">get buses</a>
+
+<h2> Towards romford</h2>
+
+<h3>Moray Way</h3>
+<div th:each="bus : ${morayWay}">
+    <p th:text="${bus.getInfo}"></p>
+</div>
+
+<h3>Belle Vue Road</h3>
+<div th:each="bus : ${belleVue}">
+    <p th:text="${bus.getInfo}"></p>
+</div>
+
+<h3>Collier Row Roundabout</h3>
+<div th:each="bus : ${collierRow}">
+    <p th:text="${bus.getInfo}"></p>
+</div>
+
+<br>
+<h2>Towards Home</h2>
+
+<h3>Romford Station</h3>
+<div th:each="bus : ${romfordStation}">
+    <p th:text="${bus.getInfo}"></p>
+</div>
+
+<h3>Western Road</h3>
+<div th:each="bus : ${westernRoad}">
+    <p th:text="${bus.getInfo}"></p>
+</div>
+
+<h3>Romford Market</h3>
+<div th:each="bus : ${romfordMarket}">
+    <p th:text="${bus.getInfo}"></p>
+</div>
+
+<h3>Romford Police Station</h3>
+<div th:each="bus : ${romfordPoliceStation}">
+    <p th:text="${bus.getInfo}"></p>
+</div>
+
+
+</body>
+</html>

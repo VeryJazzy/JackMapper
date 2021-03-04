@@ -1,5 +1,7 @@
 package BusApp;
 
+import BusApp.Json.Json;
+import BusApp.Json.JsonBus;
 import Utility.FileUtil;
 import org.junit.jupiter.api.Test;
 
@@ -17,14 +19,10 @@ class JsonTest {
     }
 
     @Test
-    void parseJsonReturnsCorrectBusesAndInfo() {
-        List<JsonBus> jsonBusList = Json.parseJson(testJson);
-        assertEquals(jsonBusList.get(0).getName(), "103");
-        assertEquals(jsonBusList.get(0).getTowards(), "Romford");
-        assertEquals(jsonBusList.get(0).getExpectedArrival(), "2021-02-28T11:15:04Z");
-        assertEquals(jsonBusList.get(1).getName(), "499");
-        assertEquals(jsonBusList.get(1).getTowards(), "Romford");
-        assertEquals(jsonBusList.get(1).getExpectedArrival(), "2021-02-28T11:05:09Z");
+    void parseJsonReturnsCorrectBuses() {
+        List<Bus> busList = Json.parseJson(testJson);
+        assertEquals(busList.get(0).getName(), "103");
+        assertEquals(busList.get(1).getName(), "499");
     }
 
 }

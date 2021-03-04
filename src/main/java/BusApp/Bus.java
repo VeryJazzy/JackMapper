@@ -1,6 +1,8 @@
 package BusApp;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class Bus {
@@ -11,9 +13,6 @@ public class Bus {
     public Bus(String name) {
         this.name = name;
     }
-
-
-
 
     public String getName() {
         return name;
@@ -29,6 +28,7 @@ public class Bus {
 
     public void addTime(int time) {
         howLongs.add(time);
+        Collections.sort(howLongs);
     }
 
     @Override
@@ -60,7 +60,11 @@ public class Bus {
                 info.append(howLongs.get(i)).append(" minutes");
                 continue;
             }
-            info.append(howLongs.get(i)).append(", ");
+            if (howLongs.get(i).equals(0)) {
+                info.append("due, ");
+            } else {
+                info.append(howLongs.get(i)).append(", ");
+            }
         }
         return info.toString();
     }

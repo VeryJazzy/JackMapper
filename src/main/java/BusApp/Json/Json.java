@@ -1,5 +1,6 @@
-package BusApp;
+package BusApp.Json;
 
+import BusApp.Bus;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -8,23 +9,18 @@ import java.util.List;
 
 public class Json {
 
-    static List<JsonBus> parseJson(String json) {
+    public static ArrayList<Bus> parseJson(String json) {
+        List<JsonBus> jsonBuses = null;
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            List<JsonBus> jsonBuses = objectMapper.readValue(json, new TypeReference<List<JsonBus>>(){});
-            return jsonBuses;
-
+            jsonBuses = objectMapper.readValue(json, new TypeReference<List<JsonBus>>(){});
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
-    }
-
-    static ArrayList<Bus> parseJsonBuses(List<JsonBus> jsonBusList) {
         ArrayList<Bus> busList = new ArrayList<>();
-        assert jsonBusList != null;
+        assert jsonBuses != null;
 
-        for (JsonBus jBus : jsonBusList) {
+        for (JsonBus jBus : jsonBuses) {
             Bus bus = new Bus(jBus.getName());
 
             if (busList.contains(bus)) {
@@ -42,4 +38,6 @@ public class Json {
         }
         return busList;
     }
+
+ 
 }

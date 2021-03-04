@@ -1,4 +1,4 @@
-package BusApp;
+package BusApp.Json;
 
 import java.util.HashMap;
 import java.util.Map;
