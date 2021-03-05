@@ -14,6 +14,8 @@
 </header>
 
 <a class="buttons" href="getBuses">get buses</a>
+<a class="buttons" href="getRomfordTrains">get Romford Trains</a>
+
 
 <h2> Towards romford</h2>
 
@@ -55,6 +57,10 @@
     <p th:text="${bus.getInfo}"></p>
 </div>
 
+<h2>Romford trains to London</h2>
+<div th:each="tflRail : ${romfordTrains}">
+    <p th:text="${tflRail.getInfo}"></p>
+</div>
 
 </body>
 </html>

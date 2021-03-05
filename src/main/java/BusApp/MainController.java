@@ -1,11 +1,13 @@
 package BusApp;
 
-import BusApp.Json.Json;
+import BusApp.Json.JsonParser;
+import com.thalesgroup.rtti._2017_10_01.ldb.types.ServiceItem;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class MainController {
@@ -13,20 +15,59 @@ public class MainController {
     @GetMapping("/getBuses")
     public String getBuses(Model model) {
         ArrayList<Bus> morayWayList = getBuses("https://api.tfl.gov.uk/StopPoint/490010016S/Arrivals");
-        model.addAttribute("morayWay",morayWayList);
+        model.addAttribute("morayWay", morayWayList);
+
         ArrayList<Bus> belleVueList = getBuses("https://api.tfl.gov.uk/StopPoint/490003843W/Arrivals");
-        model.addAttribute("belleVue",belleVueList);
+        model.addAttribute("belleVue", belleVueList);
+
         ArrayList<Bus> collierRowList = getBuses("https://api.tfl.gov.uk/StopPoint/490005438J/Arrivals");
-        model.addAttribute("collierRow",collierRowList);
+        collierRowList.removeIf(Bus -> (Bus.getName().equals("375")));
+        model.addAttribute("collierRow", collierRowList);
 
         ArrayList<Bus> romfordStationList = getBuses("https://api.tfl.gov.uk/StopPoint/490001243V/Arrivals");
-        model.addAttribute("romfordStation",romfordStationList);
+        romfordStationList.removeIf(Bus ->
+                (Bus.getName().equals("174")) ||
+                        (Bus.getName().equals("193")) ||
+                        (Bus.getName().equals("370")) ||
+                        (Bus.getName().equals("496")) ||
+                        (Bus.getName().equals("498")));
+        model.addAttribute("romfordStation", romfordStationList);
+
+
         ArrayList<Bus> westernRoadList = getBuses("https://api.tfl.gov.uk/StopPoint/490014452P/Arrivals");
-        model.addAttribute("westernRoad",westernRoadList);
+        westernRoadList.removeIf(Bus ->
+                (Bus.getName().equals("252")) ||
+                        (Bus.getName().equals("296")) ||
+                        (Bus.getName().equals("498")) ||
+                        (Bus.getName().equals("66")) ||
+                        (Bus.getName().equals("486")));
+        model.addAttribute("westernRoad", westernRoadList);
+
         ArrayList<Bus> romfordMarketList = getBuses("https://api.tfl.gov.uk/StopPoint/490011659H/Arrivals");
-        model.addAttribute("romfordMarket",romfordMarketList);
+        romfordMarketList.removeIf(Bus ->
+                (Bus.getName().equals("252")) ||
+                        (Bus.getName().equals("296")) ||
+                        (Bus.getName().equals("66")));
+        model.addAttribute("romfordMarket", romfordMarketList);
         ArrayList<Bus> romfordPoliceStationList = getBuses("https://api.tfl.gov.uk/StopPoint/490011660NA/Arrivals");
-        model.addAttribute("romfordPoliceStation",romfordPoliceStationList);
+        romfordPoliceStationList.removeIf(Bus ->
+                (Bus.getName().equals("498")) ||
+                        (Bus.getName().equals("174")));
+        model.addAttribute("romfordPoliceStation", romfordPoliceStationList);
+
+        return "index";
+    }
+
+    @GetMapping("/getRomfordTrains")
+    public String getRomfordTrains(Model model) {
+        try {
+            List<ServiceItem> serviceItemList = GetDepartureBoardExample.getDepartureBoards("RMF");
+            ArrayList<TflRail> tflRailList = ServiceItemParser.parseServiceItem(serviceItemList);
+            model.addAttribute("romfordTrains", tflRailList);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return "index";
     }
@@ -34,6 +75,6 @@ public class MainController {
 
     public ArrayList<Bus> getBuses(String uri) {
         String response = Client.ExecuteGetRequest(uri);
-        return Json.parseJson(response);
+        return JsonParser.parseJson(response);
     }
 }
