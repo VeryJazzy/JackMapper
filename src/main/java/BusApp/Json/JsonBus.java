@@ -24,29 +24,14 @@ public class JsonBus {
         return name;
     }
 
-    @JsonProperty("lineName")
-    public void setName(String name) {
-        this.name = name;
-    }
-
     @JsonProperty("towards")
     public String getTowards() {
         return towards;
     }
 
-    @JsonProperty("towards")
-    public void setTowards(String towards) {
-        this.towards = towards;
-    }
-
     @JsonProperty("expectedArrival")
     public String getExpectedArrival() {
         return expectedArrival;
-    }
-
-    @JsonProperty("expectedArrival")
-    public void setExpectedArrival(String expectedArrival) {
-        this.expectedArrival = expectedArrival;
     }
 
     @JsonAnyGetter

@@ -54,7 +54,13 @@ public class MainController {
                 (Bus.getName().equals("498")) ||
                         (Bus.getName().equals("174")));
         model.addAttribute("romfordPoliceStation", romfordPoliceStationList);
+        return "index";
+    }
 
+    @GetMapping("/getHAITrains")
+    public String getHighburyAndIslingtionTrains(Model model) {
+        ArrayList<TflTrain> highburyAndIslingtonList = getTrains("https://api.tfl.gov.uk/StopPoint/910GSTFD/ArrivalDepartures?lineIds=london-overground");
+        model.addAttribute("HAITrains", highburyAndIslingtonList);
         return "index";
     }
 
@@ -62,19 +68,49 @@ public class MainController {
     public String getRomfordTrains(Model model) {
         try {
             List<ServiceItem> serviceItemList = GetDepartureBoardExample.getDepartureBoards("RMF");
-            ArrayList<TflRail> tflRailList = ServiceItemParser.parseServiceItem(serviceItemList);
-            model.addAttribute("romfordTrains", tflRailList);
+            ArrayList<TflRailTrain> tflRailTrainList = ServiceItemParser.parseServiceItemForRomford(serviceItemList);
+            model.addAttribute("romfordTrains", tflRailTrainList);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return "index";
+    }
+
+    @GetMapping("/getStratfordTrains")
+    public String getStratfordTrains(Model model) {
+        try {
+            List<ServiceItem> serviceItemList = GetDepartureBoardExample.getDepartureBoards("SRA");
+            ArrayList<TflRailTrain> tflRailTrainList = ServiceItemParser.parseServiceItemForStratford(serviceItemList);
+            model.addAttribute("stratfordTrains", tflRailTrainList);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "index";
+    }
+
+    @GetMapping("/getLiverpoolStreetTrains")
+    public String getLiverpoolStreetTrains(Model model) {
+        try {
+            List<ServiceItem> serviceItemList = GetDepartureBoardExample.getDepartureBoards("LST");
+            ArrayList<TflRailTrain> tflRailTrainList = ServiceItemParser.parseServiceItemForLiverpoolStreet(serviceItemList);
+            model.addAttribute("liverpoolStreetTrains", tflRailTrainList);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "index";
+    }
+
+    public ArrayList<TflTrain> getTrains(String uri) {
+        String response = Client.ExecuteGetRequest(uri);
+        return JsonParser.parseJsonTrain(response);
     }
 
 
     public ArrayList<Bus> getBuses(String uri) {
         String response = Client.ExecuteGetRequest(uri);
-        return JsonParser.parseJson(response);
+        return JsonParser.parseJsonBus(response);
     }
 }

@@ -61,12 +61,9 @@ public class GetDepartureBoardExample {
     }
 
     private static List<ServiceItem> getDepartures(AccessToken accessToken, LDBServiceSoap soapService, String crs) {
-            GetBoardRequestParams params = new GetBoardRequestParams();
-            params.setCrs(crs);
-            StationBoardResponseType departureBoard = soapService.getDepartureBoard(params, accessToken);
-//            logger.info("Trains at {}", departureBoard.getGetStationBoardResult().getLocationName());
-//            logger.info("===============================================================================");
-
+        GetBoardRequestParams params = new GetBoardRequestParams();
+        params.setCrs(crs);
+        StationBoardResponseType departureBoard = soapService.getDepartureBoard(params, accessToken);
         return departureBoard.getGetStationBoardResult().getTrainServices().getService();
     }
 }

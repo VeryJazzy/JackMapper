@@ -1,17 +1,18 @@
 package BusApp;
 
-public class TflRail {
-    private final String timeArriving;
+public class TflRailTrain {
+
     private final String destination;
-    private final String platform;
+    private String platform;
+    private final String timeArriving;
     private final String onTime;
     private boolean fast;
 
-    public TflRail(String timeArriving, String destination, String platform, String onTime, boolean fast) {
+    public TflRailTrain(String timeArriving, String destination, String platform, String onTime, boolean fast) {
         this.timeArriving = timeArriving;
         this.destination = destination;
         this.onTime = onTime;
-        this.platform = platform;
+        this.platform = platform == null ? "NA" : platform;
         this.fast = fast;
     }
 

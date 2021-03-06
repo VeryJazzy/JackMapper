@@ -1,7 +1,6 @@
 package BusApp;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -44,7 +43,6 @@ public class Bus {
         if (!(o instanceof Bus)) {
             return false;
         }
-
         Bus busO = (Bus) o;
         if (this.name.equals(busO.name)) {
             return true;
@@ -56,8 +54,6 @@ public class Bus {
         StringBuilder info = new StringBuilder(this.name + ": ");
 
         for (int i = 0; i < howLongs.size(); i++) {
-
-
 
             if (i == howLongs.size() - 1) {
                 if (howLongs.get(i).equals(0)) {

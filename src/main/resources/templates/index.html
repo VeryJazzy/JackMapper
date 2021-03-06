@@ -15,7 +15,9 @@
 
 <a class="buttons" href="getBuses">get buses</a>
 <a class="buttons" href="getRomfordTrains">get Romford Trains</a>
-
+<a class="buttons" href="getStratfordTrains">get Stratford Trains</a>
+<a class="buttons" href="getLiverpoolStreetTrains">get Liverpool Street Trains</a>
+<a class="buttons" href="getHAITrains">get Highbury And Islington Trains</a>
 
 <h2> Towards romford</h2>
 
@@ -58,9 +60,25 @@
 </div>
 
 <h2>Romford trains to London</h2>
-<div th:each="tflRail : ${romfordTrains}">
-    <p th:text="${tflRail.getInfo}"></p>
+<div th:each="tflRailTrain : ${romfordTrains}">
+    <p th:text="${tflRailTrain.getInfo}"></p>
 </div>
+
+<h2>Stratford trains to Romford</h2>
+<div th:each="tflRailTrain : ${stratfordTrains}">
+    <p th:text="${tflRailTrain.getInfo}"></p>
+</div>
+
+<h2>Liverpool Street trains to Romford</h2>
+<div th:each="tflRailTrain : ${liverpoolStreetTrains}">
+    <p th:text="${tflRailTrain.getInfo}"></p>
+</div>
+
+<h2>Stratford trains to Highbury And Islington</h2>
+<div th:each="tflTrain : ${HAITrains}">
+    <p th:text="${tflTrain.getInfo}"></p>
+</div>
+
 
 </body>
 </html>
