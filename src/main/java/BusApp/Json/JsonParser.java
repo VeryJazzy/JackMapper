@@ -3,12 +3,12 @@ package BusApp.Json;
 import BusApp.Bus;
 import BusApp.TflTrain;
 import BusApp.Time;
+import BusApp.TrainComparator;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class JsonParser {
 
@@ -44,7 +44,7 @@ public class JsonParser {
         return busList;
     }
 
-    public static ArrayList<TflTrain> parseJsonTrain(String json) {
+    public static ArrayList<TflTrain> parseJsonTrain(String json, String towards) {
         List<JsonTrain> jsonTrainList = null;
         try {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -60,21 +60,46 @@ public class JsonParser {
 
         for (JsonTrain jTrain : jsonTrainList) {
             //checks its outbound
-            if (jTrain.getTimeDeparting() == null) {
-                continue;
+            //check its stratford
+
+
+            int time = 66;
+            LocalTime expectedArrival;
+            if (towards.equals("stratford")) {
+                if (!jTrain.getDestination().equals("Stratford (London) Rail Station")) {
+                    continue;
+                }
+                time = Time.howLong(jTrain.getExpectedArrival());// hi to st
+                expectedArrival = Time.parseTime(jTrain.getExpectedArrival());
+
+
+
+            } else {
+                if (jTrain.getTimeDeparting() == null) {
+                    continue;
+                }
+                time = Time.howLong(jTrain.getTimeDeparting()); //st to hi
+                expectedArrival = Time.parseTime(jTrain.getTimeDeparting());
+
             }
 
-            TflTrain tflTrain = new TflTrain(jTrain.getDestination(), jTrain.getPlatform());
 
-            int time = Time.howLong(jTrain.getTimeDeparting());
-            tflTrain.addTime(time);
-            tflTrainList.add(tflTrain);
-            LocalTime expectedArrival = Time.parseTime(jTrain.getTimeDeparting());
 
-            tflTrain.setTimeArriving(expectedArrival.toString());
+
+            TflTrain train = new TflTrain.Builder()
+                    .withDestination(jTrain.getDestination())
+                    .onPlatform(jTrain.getPlatform())
+                    .addHowLong(time)
+                    .timeArriving(expectedArrival.toString()).build();
+
+            tflTrainList.add(train);
         }
+
+        tflTrainList.sort(new TrainComparator());
         return tflTrainList;
     }
+
+
 
 
 }

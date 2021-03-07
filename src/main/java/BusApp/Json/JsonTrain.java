@@ -15,6 +15,13 @@ public class JsonTrain {
     private String destination;
     @JsonProperty("estimatedTimeOfDeparture")
     private String timeDeparting;
+    @JsonProperty("expectedArrival")
+    private String expectedArrival;
+
+    @JsonProperty("expectedArrival")
+    public String getExpectedArrival() {
+        return expectedArrival;
+    }
 
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();

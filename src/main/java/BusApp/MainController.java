@@ -59,10 +59,18 @@ public class MainController {
 
     @GetMapping("/getHAITrains")
     public String getHighburyAndIslingtionTrains(Model model) {
-        ArrayList<TflTrain> highburyAndIslingtonList = getTrains("https://api.tfl.gov.uk/StopPoint/910GSTFD/ArrivalDepartures?lineIds=london-overground");
+        ArrayList<TflTrain> highburyAndIslingtonList = getTrains("https://api.tfl.gov.uk/StopPoint/910GSTFD/ArrivalDepartures?lineIds=london-overground", "");
         model.addAttribute("HAITrains", highburyAndIslingtonList);
         return "index";
     }
+
+    @GetMapping("/getHAItoStratfordTrains")
+    public String getHighburyAndIslingtionToStratfordTrains(Model model) {
+        ArrayList<TflTrain> HAItoStratford = getTrains("https://api.tfl.gov.uk/StopPoint/910GHGHI/Arrivals", "stratford");
+        model.addAttribute("HAItoStratfordTrains", HAItoStratford);
+        return "index";
+    }
+
 
     @GetMapping("/getRomfordTrains")
     public String getRomfordTrains(Model model) {
@@ -103,9 +111,9 @@ public class MainController {
         return "index";
     }
 
-    public ArrayList<TflTrain> getTrains(String uri) {
+    public ArrayList<TflTrain> getTrains(String uri, String towards) {
         String response = Client.ExecuteGetRequest(uri);
-        return JsonParser.parseJsonTrain(response);
+        return JsonParser.parseJsonTrain(response, towards);
     }
 
 

@@ -37,17 +37,13 @@ public class TflRailTrain {
     }
 
     public String getInfo() {
-        if (!onTime.equals("On time")) {
-            if (fast) {
-                return "FAST " + timeArriving + " platform " + platform + "<" + onTime + ">";
-            }
-            return timeArriving + " platform " + platform + "<" + onTime + ">";
-        }
+        StringBuilder builder = new StringBuilder();
+        builder.append(fast ? "FAST " : "");
 
+        builder.append(timeArriving).append(" platform ").append(platform);
 
-        if (fast) {
-            return "FAST " + timeArriving + " platform " + platform;
-        }
-        return timeArriving + " platform " + platform;
+        builder.append(!onTime.equals("On time") ? "<" + onTime + ">" : "");
+
+        return builder.toString();
     }
 }

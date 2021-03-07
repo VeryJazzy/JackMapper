@@ -18,6 +18,8 @@
 <a class="buttons" href="getStratfordTrains">get Stratford Trains</a>
 <a class="buttons" href="getLiverpoolStreetTrains">get Liverpool Street Trains</a>
 <a class="buttons" href="getHAITrains">get Highbury And Islington Trains</a>
+<a class="buttons" href="getHAItoStratfordTrains">get highbury and islington to stratford </a>
+
 
 <h2> Towards romford</h2>
 
@@ -78,6 +80,12 @@
 <div th:each="tflTrain : ${HAITrains}">
     <p th:text="${tflTrain.getInfo}"></p>
 </div>
+
+<h2>Highbury And Islington trains to stratford</h2>
+<div th:each="tflTrain : ${HAItoStratfordTrains}">
+    <p th:text="${tflTrain.getInfo}"></p>
+</div>
+
 
 
 </body>
