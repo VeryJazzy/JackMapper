@@ -7,44 +7,33 @@ import java.util.List;
 
 public class ServiceItemParser {
 
-    public static ArrayList<TflRailTrain> parseServiceItemForRomford(List<ServiceItem> serviceItemList) {
-        ArrayList<TflRailTrain> tflRailTrainList = new ArrayList<>();
+    public static ArrayList<Train> parseServiceItem(List<ServiceItem> serviceItemList, String destination) {
+        ArrayList<Train> trainList = new ArrayList<>();
 
         for (ServiceItem si : serviceItemList) {
-            if (si.getDestination().getLocation().get(0).getLocationName().equals("London Liverpool Street")) {
-                boolean fast;
-                if (si.getOrigin().getLocation().get(0).getCrs().equals("CET") || si.getOrigin().getLocation().get(0).getCrs().equals("SOV")) {
-                    fast = true;
-                } else {
-                    fast = false;
-                }
-                TflRailTrain tflRailTrain = new TflRailTrain(si.getStd(), si.getDestination().getLocation().get(0).getLocationName(), si.getPlatform(), si.getEtd(), fast);
-                tflRailTrainList.add(tflRailTrain);
+            if (si.getDestination().getLocation().get(0).getLocationName().equals(destination)) {
+
+                boolean fast = checkIfFast(si); // check if: southend / colchester -> liverpoolStreet
+                String platform = si.getPlatform() == null ? "Platform Unknown" : si.getPlatform();
+
+                Train train = new Train.Builder()
+                        .withDestination(si.getDestination().getLocation().get(0).getLocationName())
+                        .onPlatform(platform)
+                        .isOnTime(si.getEtd())
+                        .timeArriving(si.getStd())
+                        .isFast(fast)
+                        .build();
+                trainList.add(train);
             }
         }
-
-        return tflRailTrainList;
+        return trainList;
     }
 
-    public static ArrayList<TflRailTrain> parseServiceItemForStratford(List<ServiceItem> serviceItemList) {
-        ArrayList<TflRailTrain> tflRailTrainList = new ArrayList<>();
-        for (ServiceItem si : serviceItemList) {
-            if (si.getDestination().getLocation().get(0).getLocationName().equals("Shenfield")) {
-                TflRailTrain tflRailTrain = new TflRailTrain(si.getStd(), si.getDestination().getLocation().get(0).getLocationName(), si.getPlatform(), si.getEtd(), false);
-                tflRailTrainList.add(tflRailTrain);
-            }
+    public static boolean checkIfFast(ServiceItem si) {
+        if (si.getOrigin().getLocation().get(0).getCrs().equals("CET") || si.getOrigin().getLocation().get(0).getCrs().equals("SOV")) {
+            return true;
+        } else {
+            return false;
         }
-        return tflRailTrainList;
-    }
-
-    public static ArrayList<TflRailTrain> parseServiceItemForLiverpoolStreet(List<ServiceItem> serviceItemList) {
-        ArrayList<TflRailTrain> tflRailTrainList = new ArrayList<>();
-        for (ServiceItem si : serviceItemList) {
-            if (si.getDestination().getLocation().get(0).getLocationName().equals("Shenfield")) {
-                TflRailTrain tflRailTrain = new TflRailTrain(si.getStd(), si.getDestination().getLocation().get(0).getLocationName(), si.getPlatform(), si.getEtd(), false);
-                tflRailTrainList.add(tflRailTrain);
-            }
-        }
-        return tflRailTrainList;
     }
 }

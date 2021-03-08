@@ -33,9 +33,9 @@ import java.util.List;
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-public class GetDepartureBoardExample {
+public class SoapDepartureBoard {
 
-    private static final Logger logger = LoggerFactory.getLogger(GetDepartureBoardExample.class);
+    private static final Logger logger = LoggerFactory.getLogger(SoapDepartureBoard.class);
 
     private static final String LDB_TOKEN = "0c5860e6-9535-431c-a31f-628676af5765";
     private static final boolean DEBUG = false;

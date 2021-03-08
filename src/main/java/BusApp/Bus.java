@@ -54,20 +54,12 @@ public class Bus {
         StringBuilder info = new StringBuilder(this.name + ": ");
 
         for (int i = 0; i < howLongs.size(); i++) {
+            info.append(howLongs.get(i).equals(0) ? "due, " : howLongs.get(i));
 
             if (i == howLongs.size() - 1) {
-                if (howLongs.get(i).equals(0)) {
-                    info.append("due");
-                } else {
-                    info.append(howLongs.get(i)).append(" minutes");
-                }
-                continue;
-            }
-            if (howLongs.get(i).equals(0)) {
-                info.append("due, ");
-            } else {
-                info.append(howLongs.get(i)).append(", ");
-            }
+                info.append(" minutes");
+            } else info.append(", ");
+//            info.append(i == howLongs.size() - 1 ? " minutes" : ", ");
         }
         return info.toString();
     }

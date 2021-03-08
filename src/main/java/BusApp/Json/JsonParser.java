@@ -1,7 +1,7 @@
 package BusApp.Json;
 
 import BusApp.Bus;
-import BusApp.TflTrain;
+import BusApp.Train;
 import BusApp.Time;
 import BusApp.TrainComparator;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -44,7 +44,7 @@ public class JsonParser {
         return busList;
     }
 
-    public static ArrayList<TflTrain> parseJsonTrain(String json, String towards) {
+    public static ArrayList<Train> parseJsonTrain(String json, String towards) {
         List<JsonTrain> jsonTrainList = null;
         try {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -55,7 +55,7 @@ public class JsonParser {
         }
 
 
-        ArrayList<TflTrain> tflTrainList = new ArrayList<>();
+        ArrayList<Train> trainList = new ArrayList<>();
         assert jsonTrainList != null;
 
         for (JsonTrain jTrain : jsonTrainList) {
@@ -86,17 +86,17 @@ public class JsonParser {
 
 
 
-            TflTrain train = new TflTrain.Builder()
+            Train train = new Train.Builder()
                     .withDestination(jTrain.getDestination())
                     .onPlatform(jTrain.getPlatform())
                     .addHowLong(time)
                     .timeArriving(expectedArrival.toString()).build();
 
-            tflTrainList.add(train);
+            trainList.add(train);
         }
 
-        tflTrainList.sort(new TrainComparator());
-        return tflTrainList;
+        trainList.sort(new TrainComparator());
+        return trainList;
     }
 
 

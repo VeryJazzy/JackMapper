@@ -7,118 +7,125 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
 public class MainController {
 
-    @GetMapping("/getBuses")
-    public String getBuses(Model model) {
-        ArrayList<Bus> morayWayList = getBuses("https://api.tfl.gov.uk/StopPoint/490010016S/Arrivals");
-        model.addAttribute("morayWay", morayWayList);
+    @GetMapping("/getBusesToRomford")
+    public String getBusesToRomford(Model model) {
+        model.addAttribute("morayWay", getBusStop("https://api.tfl.gov.uk/StopPoint/490010016S/Arrivals"));
+        model.addAttribute("belleVue", getBusStop("https://api.tfl.gov.uk/StopPoint/490003843W/Arrivals"));
+        model.addAttribute("collierRow", getBusStop("https://api.tfl.gov.uk/StopPoint/490005438J/Arrivals",
+                List.of("375")));
+        return "index";
+    }
 
-        ArrayList<Bus> belleVueList = getBuses("https://api.tfl.gov.uk/StopPoint/490003843W/Arrivals");
-        model.addAttribute("belleVue", belleVueList);
+    @GetMapping("/getBusesToHome")
+    public String getBusesToHome(Model model) {
+        model.addAttribute("romfordStation", getBusStop("https://api.tfl.gov.uk/StopPoint/490001243V/Arrivals",
+                List.of("174", "193", "370", "496", "498")));
 
-        ArrayList<Bus> collierRowList = getBuses("https://api.tfl.gov.uk/StopPoint/490005438J/Arrivals");
-        collierRowList.removeIf(Bus -> (Bus.getName().equals("375")));
-        model.addAttribute("collierRow", collierRowList);
+        model.addAttribute("westernRoad", getBusStop("https://api.tfl.gov.uk/StopPoint/490014452P/Arrivals",
+                List.of("296", "498", "66", "486", "375", "365", "86")));
 
-        ArrayList<Bus> romfordStationList = getBuses("https://api.tfl.gov.uk/StopPoint/490001243V/Arrivals");
-        romfordStationList.removeIf(Bus ->
-                (Bus.getName().equals("174")) ||
-                        (Bus.getName().equals("193")) ||
-                        (Bus.getName().equals("370")) ||
-                        (Bus.getName().equals("496")) ||
-                        (Bus.getName().equals("498")));
-        model.addAttribute("romfordStation", romfordStationList);
+        model.addAttribute("romfordMarket", getBusStop("https://api.tfl.gov.uk/StopPoint/490011659H/Arrivals",
+                List.of("296", "66")));
 
-
-        ArrayList<Bus> westernRoadList = getBuses("https://api.tfl.gov.uk/StopPoint/490014452P/Arrivals");
-        westernRoadList.removeIf(Bus ->
-                (Bus.getName().equals("252")) ||
-                        (Bus.getName().equals("296")) ||
-                        (Bus.getName().equals("498")) ||
-                        (Bus.getName().equals("66")) ||
-                        (Bus.getName().equals("486")));
-        model.addAttribute("westernRoad", westernRoadList);
-
-        ArrayList<Bus> romfordMarketList = getBuses("https://api.tfl.gov.uk/StopPoint/490011659H/Arrivals");
-        romfordMarketList.removeIf(Bus ->
-                (Bus.getName().equals("252")) ||
-                        (Bus.getName().equals("296")) ||
-                        (Bus.getName().equals("66")));
-        model.addAttribute("romfordMarket", romfordMarketList);
-        ArrayList<Bus> romfordPoliceStationList = getBuses("https://api.tfl.gov.uk/StopPoint/490011660NA/Arrivals");
-        romfordPoliceStationList.removeIf(Bus ->
-                (Bus.getName().equals("498")) ||
-                        (Bus.getName().equals("174")));
-        model.addAttribute("romfordPoliceStation", romfordPoliceStationList);
+        model.addAttribute("romfordPoliceStation", getBusStop("https://api.tfl.gov.uk/StopPoint/490011660NA/Arrivals",
+                List.of("498", "174")));
         return "index";
     }
 
     @GetMapping("/getHAITrains")
     public String getHighburyAndIslingtionTrains(Model model) {
-        ArrayList<TflTrain> highburyAndIslingtonList = getTrains("https://api.tfl.gov.uk/StopPoint/910GSTFD/ArrivalDepartures?lineIds=london-overground", "");
-        model.addAttribute("HAITrains", highburyAndIslingtonList);
+        model.addAttribute("HAITrains", getTrains("https://api.tfl.gov.uk/StopPoint/910GSTFD/ArrivalDepartures?lineIds=london-overground"));
         return "index";
     }
 
     @GetMapping("/getHAItoStratfordTrains")
     public String getHighburyAndIslingtionToStratfordTrains(Model model) {
-        ArrayList<TflTrain> HAItoStratford = getTrains("https://api.tfl.gov.uk/StopPoint/910GHGHI/Arrivals", "stratford");
-        model.addAttribute("HAItoStratfordTrains", HAItoStratford);
+        model.addAttribute("HAItoStratfordTrains", getTrains("https://api.tfl.gov.uk/StopPoint/910GHGHI/Arrivals", "stratford"));
         return "index";
     }
 
-
     @GetMapping("/getRomfordTrains")
     public String getRomfordTrains(Model model) {
-        try {
-            List<ServiceItem> serviceItemList = GetDepartureBoardExample.getDepartureBoards("RMF");
-            ArrayList<TflRailTrain> tflRailTrainList = ServiceItemParser.parseServiceItemForRomford(serviceItemList);
-            model.addAttribute("romfordTrains", tflRailTrainList);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        model.addAttribute("romfordTrains", getNationalRailTrains("RMF", "London Liverpool Street"));
         return "index";
     }
 
     @GetMapping("/getStratfordTrains")
     public String getStratfordTrains(Model model) {
-        try {
-            List<ServiceItem> serviceItemList = GetDepartureBoardExample.getDepartureBoards("SRA");
-            ArrayList<TflRailTrain> tflRailTrainList = ServiceItemParser.parseServiceItemForStratford(serviceItemList);
-            model.addAttribute("stratfordTrains", tflRailTrainList);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        model.addAttribute("stratfordTrains", getNationalRailTrains("SRA", "Shenfield"));
         return "index";
     }
 
     @GetMapping("/getLiverpoolStreetTrains")
     public String getLiverpoolStreetTrains(Model model) {
-        try {
-            List<ServiceItem> serviceItemList = GetDepartureBoardExample.getDepartureBoards("LST");
-            ArrayList<TflRailTrain> tflRailTrainList = ServiceItemParser.parseServiceItemForLiverpoolStreet(serviceItemList);
-            model.addAttribute("liverpoolStreetTrains", tflRailTrainList);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        model.addAttribute("liverpoolStreetTrains", getNationalRailTrains("LST", "Shenfield"));
         return "index";
     }
 
-    public ArrayList<TflTrain> getTrains(String uri, String towards) {
+    public ArrayList<Train> getNationalRailTrains(String crs, String destination) {
+        ArrayList<Train> trainList = null;
+        try {
+            List<ServiceItem> serviceItemList = SoapDepartureBoard.getDepartureBoards(crs);
+            assert serviceItemList != null;
+            trainList = ServiceItemParser.parseServiceItem(serviceItemList, destination);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return trainList;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public ArrayList<Train> getTrains(String uri) {
+        return getTrains(uri, "");
+    }
+
+    public ArrayList<Train> getTrains(String uri, String towards) {
         String response = Client.ExecuteGetRequest(uri);
         return JsonParser.parseJsonTrain(response, towards);
     }
 
+    public ArrayList<Bus> getBusStop(String uri) {
+        return getBusStop(uri, Collections.emptyList());
+    }
 
-    public ArrayList<Bus> getBuses(String uri) {
+    public ArrayList<Bus> getBusStop(String uri, List<String> remove) {
         String response = Client.ExecuteGetRequest(uri);
-        return JsonParser.parseJsonBus(response);
+        ArrayList<Bus> busList = JsonParser.parseJsonBus(response);
+        busList = removeBuses(busList, remove);
+        return busList;
+    }
+
+    public ArrayList<Bus> removeBuses(ArrayList<Bus> busList, List<String> remove) {
+        for (String busNumber : remove) {
+            busList.removeIf(Bus -> (Bus.getName().equals(busNumber)));
+        }
+        return busList;
     }
 }

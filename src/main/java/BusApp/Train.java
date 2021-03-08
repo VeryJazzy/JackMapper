@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class TflTrain {
+public class Train {
 
     public static class Builder {
 
@@ -12,7 +12,7 @@ public class TflTrain {
         private String platform;
         private List<Integer> howLongs = new ArrayList<>();
         private String timeArriving;
-        private String onTime;
+        private String onTime = "On time";
         private boolean fast;
 
         public Builder withDestination(String destination) {
@@ -20,8 +20,23 @@ public class TflTrain {
             return this;
         }
 
+        private String destinationReNamer(String destination) {
+            switch (destination) {
+                case "Richmond (London) Rail Station":
+                    return "Richmond";
+                case "Willesden Junction Rail Station":
+                    return "Willesden";
+                case "Stratford (London) Rail Station":
+                    return "Stratford";
+                case "Clapham Junction Rail Station":
+                    return "Clapham Junction";
+            }
+            return "Unknown Destination";
+        }
+
         public Builder onPlatform(String platform) {
-            this.platform = platform.equals("Platform Unknown") ? "Platform NA" : platform;
+            this.platform = platform.equals("Platform Unknown") ? "NA" : platform;
+
             return this;
         }
 
@@ -45,30 +60,17 @@ public class TflTrain {
             return this;
         }
 
-        public TflTrain build() {
-            TflTrain train = new TflTrain();
+        public Train build() {
+            Train train = new Train();
             train.destination = this.destination;
             train.platform = this.platform;
             train.howLongs = this.howLongs;
             train.timeArriving = this.timeArriving;
+            train.onTime = this.onTime;
+            train.fast = this.fast;
             return train;
         }
-
-
-
-        private String destinationReNamer(String destination) {
-            switch (destination) {
-                case "Richmond (London) Rail Station":
-                    return "Richmond";
-                case "Willesden Junction Rail Station":
-                    return "Willesden";
-                case "Stratford (London) Rail Station":
-                    return "Stratford";
-            }
-            return null;
-        }
     }
-
 
     private String destination;
     private String platform;
@@ -77,15 +79,14 @@ public class TflTrain {
     private String onTime;
     private boolean fast;
 
-
-    private TflTrain() {}
+    private Train() {}
 
     public String getDestination() {
         return destination;
     }
 
     public void addTime(int time) {
-        howLongs.add(time);
+        howLongs.add(time - 1);
         Collections.sort(howLongs);
     }
 
@@ -103,10 +104,10 @@ public class TflTrain {
         if (o == this) {
             return true;
         }
-        if (!(o instanceof TflTrain)) {
+        if (!(o instanceof Train)) {
             return false;
         }
-        TflTrain t = (TflTrain) o;
+        Train t = (Train) o;
         if (this.destination.equals(t.destination)) {
             return true;
         }
@@ -120,8 +121,8 @@ public class TflTrain {
     public String getRailInfo() {
         StringBuilder builder = new StringBuilder();
         builder.append(fast ? "FAST " : "");
-        builder.append(timeArriving).append(" platform ").append(platform);
-        builder.append(!onTime.equals("On time") ? "<" + onTime + ">" : "");
+        builder.append(timeArriving).append(" Platform ").append(platform);
+        builder.append(!onTime.equals("On time") ? " <Delayed: " + onTime + ">" : "");
         return builder.toString();
     }
 
