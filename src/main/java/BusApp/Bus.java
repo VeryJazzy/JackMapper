@@ -1,24 +1,33 @@
 package BusApp;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.*;
 
 public class Bus {
 
+    @JsonProperty("lineName")
     private String name;
+    @JsonProperty("expectedArrival")
+    private String expectedArrival;
     private List<Integer> howLongs = new ArrayList<>();
 
-    public Bus(String name) {
-        this.name = name;
+    @JsonIgnore
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+
+    @JsonAnySetter
+    public void setAdditionalProperty(String name, Object value) {
+        this.additionalProperties.put(name, value);
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getExpectedArrival() {
+        return expectedArrival;
     }
 
     public List<Integer> getHowLongs() {
@@ -32,7 +41,7 @@ public class Bus {
 
     @Override
     public String toString() {
-      return name;
+        return name;
     }
 
     @Override
@@ -54,13 +63,10 @@ public class Bus {
         StringBuilder info = new StringBuilder(this.name + ": ");
 
         for (int i = 0; i < howLongs.size(); i++) {
-            info.append(howLongs.get(i).equals(0) ? "due, " : howLongs.get(i));
-
-            if (i == howLongs.size() - 1) {
-                info.append(" minutes");
-            } else info.append(", ");
-//            info.append(i == howLongs.size() - 1 ? " minutes" : ", ");
+            info.append(howLongs.get(i).equals(0) ? "due" : howLongs.get(i));
+            info.append(i == howLongs.size() - 1 ? " minutes" : ", ");
         }
         return info.toString();
     }
+
 }

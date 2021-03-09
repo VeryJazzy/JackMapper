@@ -20,7 +20,7 @@ public class ServiceItemParser {
                         .withDestination(si.getDestination().getLocation().get(0).getLocationName())
                         .onPlatform(platform)
                         .isOnTime(si.getEtd())
-                        .timeArriving(si.getStd())
+                        .timeDeparting(si.getStd())
                         .isFast(fast)
                         .build();
                 trainList.add(train);

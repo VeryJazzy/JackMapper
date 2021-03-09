@@ -14,12 +14,12 @@ class JsonParserTest {
 
     @Test
     void parseJsonReturnsRightAmountOfBuses() {
-        assertEquals(JsonParser.parseJsonBus(testJson).size(), 2);
+        assertEquals(JsonParser.parseBusResponse(testJson).size(), 2);
     }
 
     @Test
     void parseJsonReturnsCorrectBuses() {
-        List<Bus> busList = JsonParser.parseJsonBus(testJson);
+        List<Bus> busList = JsonParser.parseBusResponse(testJson);
         assertEquals(busList.get(0).getName(), "103");
         assertEquals(busList.get(1).getName(), "499");
     }

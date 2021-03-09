@@ -1,9 +1,6 @@
 package BusApp.Json;
 
-import BusApp.Bus;
-import BusApp.Train;
-import BusApp.Time;
-import BusApp.TrainComparator;
+import BusApp.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -12,39 +9,28 @@ import java.util.*;
 
 public class JsonParser {
 
-    public static ArrayList<Bus> parseJsonBus(String json) {
-        List<JsonBus> jsonBuses = null;
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            jsonBuses = objectMapper.readValue(json, new TypeReference<List<JsonBus>>() {
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        ArrayList<Bus> busList = new ArrayList<>();
-        assert jsonBuses != null;
+    public static ArrayList<Bus> parseBusResponse(String json) {
+        List<Bus> individualBuses = JacksonMapper.extractJsonBuses(json);
+        HashMap<String, Bus> busMap = new HashMap<>();
 
-        for (JsonBus jBus : jsonBuses) {
-            Bus bus = new Bus(jBus.getName());
+        for (Bus bus : individualBuses) {
+            int howLong = Time.howLong(bus.getExpectedArrival());
 
-            if (busList.contains(bus)) {
-                for (Bus b : busList) {
-                    if (b.equals(bus)) {
-
-                        int time = Time.howLong(jBus.getExpectedArrival());
-                        b.addTime(time);
-                    }
-                }
+            if (busMap.containsValue(bus)) {
+                busMap.get(bus.getName()).addTime(howLong);
             } else {
-                int time = Time.howLong(jBus.getExpectedArrival());
-                bus.addTime(time);
-                busList.add(bus);
+                bus.addTime(howLong);
+                busMap.put(bus.getName(), bus);
             }
         }
+
+        ArrayList<Bus> busList = new ArrayList<>(busMap.values());
+        busList.sort(new BusComparator());
         return busList;
     }
 
-    public static ArrayList<Train> parseJsonTrain(String json, String towards) {
+
+    public static ArrayList<Train> parseTrainResponse(String json, String towards) {
         List<JsonTrain> jsonTrainList = null;
         try {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -53,33 +39,28 @@ public class JsonParser {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
         ArrayList<Train> trainList = new ArrayList<>();
         assert jsonTrainList != null;
 
+
         for (JsonTrain jTrain : jsonTrainList) {
-            //checks its outbound
-            //check its stratford
+            int howLong = 66;
+            LocalTime timeDeparting;
 
 
-            int time = 66;
-            LocalTime expectedArrival;
             if (towards.equals("stratford")) {
                 if (!jTrain.getDestination().equals("Stratford (London) Rail Station")) {
                     continue;
                 }
-                time = Time.howLong(jTrain.getExpectedArrival());// hi to st
-                expectedArrival = Time.parseTime(jTrain.getExpectedArrival());
-
-
-
-            } else {
+                howLong = Time.howLong(jTrain.getExpectedArrival());// hi to st
+                timeDeparting = Time.parseTime(jTrain.getExpectedArrival());
+            }
+            else {
                 if (jTrain.getTimeDeparting() == null) {
                     continue;
                 }
-                time = Time.howLong(jTrain.getTimeDeparting()); //st to hi
-                expectedArrival = Time.parseTime(jTrain.getTimeDeparting());
+                howLong = Time.howLong(jTrain.getTimeDeparting()); //st to hi
+                timeDeparting = Time.parseTime(jTrain.getTimeDeparting());
 
             }
 
@@ -89,8 +70,8 @@ public class JsonParser {
             Train train = new Train.Builder()
                     .withDestination(jTrain.getDestination())
                     .onPlatform(jTrain.getPlatform())
-                    .addHowLong(time)
-                    .timeArriving(expectedArrival.toString()).build();
+                    .addHowLong(howLong)
+                    .timeDeparting(timeDeparting.toString()).build();
 
             trainList.add(train);
         }
@@ -98,8 +79,6 @@ public class JsonParser {
         trainList.sort(new TrainComparator());
         return trainList;
     }
-
-
 
 
 }

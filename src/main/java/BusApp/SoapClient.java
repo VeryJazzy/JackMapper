@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.naming.ConfigurationException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,9 +34,9 @@ import java.util.List;
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-public class SoapDepartureBoard {
+public class SoapClient {
 
-    private static final Logger logger = LoggerFactory.getLogger(SoapDepartureBoard.class);
+    private static final Logger logger = LoggerFactory.getLogger(SoapClient.class);
 
     private static final String LDB_TOKEN = "0c5860e6-9535-431c-a31f-628676af5765";
     private static final boolean DEBUG = false;
@@ -65,5 +66,17 @@ public class SoapDepartureBoard {
         params.setCrs(crs);
         StationBoardResponseType departureBoard = soapService.getDepartureBoard(params, accessToken);
         return departureBoard.getGetStationBoardResult().getTrainServices().getService();
+    }
+
+    public static ArrayList<Train> getNationalRailTrains(String crs, String destination) {
+        ArrayList<Train> trainList = null;
+        try {
+            List<ServiceItem> serviceItemList = SoapClient.getDepartureBoards(crs);
+            assert serviceItemList != null;
+            trainList = ServiceItemParser.parseServiceItem(serviceItemList, destination);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return trainList;
     }
 }

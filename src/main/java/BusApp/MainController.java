@@ -1,14 +1,15 @@
 package BusApp;
 
-import BusApp.Json.JsonParser;
-import com.thalesgroup.rtti._2017_10_01.ldb.types.ServiceItem;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+
+import static BusApp.Client.getBusStop;
+import static BusApp.Client.getTrains;
+import static BusApp.SoapClient.getNationalRailTrains;
+
 
 @Controller
 public class MainController {
@@ -31,7 +32,7 @@ public class MainController {
                 List.of("296", "498", "66", "486", "375", "365", "86")));
 
         model.addAttribute("romfordMarket", getBusStop("https://api.tfl.gov.uk/StopPoint/490011659H/Arrivals",
-                List.of("296", "66")));
+                List.of("296", "66", "375")));
 
         model.addAttribute("romfordPoliceStation", getBusStop("https://api.tfl.gov.uk/StopPoint/490011660NA/Arrivals",
                 List.of("498", "174")));
@@ -68,64 +69,8 @@ public class MainController {
         return "index";
     }
 
-    public ArrayList<Train> getNationalRailTrains(String crs, String destination) {
-        ArrayList<Train> trainList = null;
-        try {
-            List<ServiceItem> serviceItemList = SoapDepartureBoard.getDepartureBoards(crs);
-            assert serviceItemList != null;
-            trainList = ServiceItemParser.parseServiceItem(serviceItemList, destination);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return trainList;
-    }
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public ArrayList<Train> getTrains(String uri) {
-        return getTrains(uri, "");
-    }
-
-    public ArrayList<Train> getTrains(String uri, String towards) {
-        String response = Client.ExecuteGetRequest(uri);
-        return JsonParser.parseJsonTrain(response, towards);
-    }
-
-    public ArrayList<Bus> getBusStop(String uri) {
-        return getBusStop(uri, Collections.emptyList());
-    }
-
-    public ArrayList<Bus> getBusStop(String uri, List<String> remove) {
-        String response = Client.ExecuteGetRequest(uri);
-        ArrayList<Bus> busList = JsonParser.parseJsonBus(response);
-        busList = removeBuses(busList, remove);
-        return busList;
-    }
-
-    public ArrayList<Bus> removeBuses(ArrayList<Bus> busList, List<String> remove) {
-        for (String busNumber : remove) {
-            busList.removeIf(Bus -> (Bus.getName().equals(busNumber)));
-        }
-        return busList;
-    }
 }

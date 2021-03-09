@@ -11,7 +11,7 @@ public class Train {
         private String destination;
         private String platform;
         private List<Integer> howLongs = new ArrayList<>();
-        private String timeArriving;
+        private String timeDeparting;
         private String onTime = "On time";
         private boolean fast;
 
@@ -40,8 +40,8 @@ public class Train {
             return this;
         }
 
-        public Builder timeArriving(String timeArriving) {
-            this.timeArriving = timeArriving;
+        public Builder timeDeparting(String timeDeparting) {
+            this.timeDeparting = timeDeparting;
             return this;
         }
 
@@ -65,7 +65,7 @@ public class Train {
             train.destination = this.destination;
             train.platform = this.platform;
             train.howLongs = this.howLongs;
-            train.timeArriving = this.timeArriving;
+            train.timeArriving = this.timeDeparting;
             train.onTime = this.onTime;
             train.fast = this.fast;
             return train;
@@ -115,7 +115,7 @@ public class Train {
     }
 
     public String getInfo() {
-        return howLongs.get(0) + ":   " + timeArriving + " " + destination + ", " + platform;
+        return timeArriving + " " + destination + ", " + platform;
     }
 
     public String getRailInfo() {
