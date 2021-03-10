@@ -1,6 +1,7 @@
 package BusApp.Json;
 
 import BusApp.Bus;
+import BusApp.Train;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

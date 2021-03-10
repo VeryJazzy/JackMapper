@@ -11,71 +11,59 @@ public class JsonParser {
 
     public static ArrayList<Bus> parseBusResponse(String json) {
         List<Bus> individualBuses = JacksonMapper.extractJsonBuses(json);
-        HashMap<String, Bus> busMap = new HashMap<>();
+        HashMap<String, Bus> busesWeWant = new HashMap<>();
 
         for (Bus bus : individualBuses) {
             int howLong = Time.howLong(bus.getExpectedArrival());
 
-            if (busMap.containsValue(bus)) {
-                busMap.get(bus.getName()).addTime(howLong);
+            if (busesWeWant.containsValue(bus)) {
+                busesWeWant.get(bus.getName()).addTime(howLong);
             } else {
                 bus.addTime(howLong);
-                busMap.put(bus.getName(), bus);
+                busesWeWant.put(bus.getName(), bus);
             }
         }
 
-        ArrayList<Bus> busList = new ArrayList<>(busMap.values());
+        ArrayList<Bus> busList = new ArrayList<>(busesWeWant.values());
         busList.sort(new BusComparator());
         return busList;
     }
 
 
-    public static ArrayList<Train> parseTrainResponse(String json, String towards) {
-        List<JsonTrain> jsonTrainList = null;
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            jsonTrainList = objectMapper.readValue(json, new TypeReference<List<JsonTrain>>() {
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static ArrayList<Train> parseTrainResponse(String json, String destination) {
+        List<JsonTrain> jsonTrainList = JacksonMapper.extractJsonTrains(json);
         ArrayList<Train> trainList = new ArrayList<>();
-        assert jsonTrainList != null;
-
 
         for (JsonTrain jTrain : jsonTrainList) {
-            int howLong = 66;
-            LocalTime timeDeparting;
+            int howLong = -1;
+            LocalTime timeDeparting = null;
 
+            switch (destination) {
+                case "Stratford (London) Rail Station":
+                    if (!jTrain.getDestination().equals(destination)) {
+                        continue;
+                    }
+                    howLong = Time.howLong(jTrain.getExpectedArrival());// hi to st
+                    timeDeparting = Time.parseTime(jTrain.getExpectedArrival());
+                    break;
 
-            if (towards.equals("stratford")) {
-                if (!jTrain.getDestination().equals("Stratford (London) Rail Station")) {
-                    continue;
-                }
-                howLong = Time.howLong(jTrain.getExpectedArrival());// hi to st
-                timeDeparting = Time.parseTime(jTrain.getExpectedArrival());
+                case "Highbury & Islington Rail Station":
+                    if (jTrain.getTimeDeparting() == null) { // if its terminated/inbound
+                        continue;
+                    }
+                    howLong = Time.howLong(jTrain.getTimeDeparting()); //st to hi
+                    timeDeparting = Time.parseTime(jTrain.getTimeDeparting());
+                    break;
             }
-            else {
-                if (jTrain.getTimeDeparting() == null) {
-                    continue;
-                }
-                howLong = Time.howLong(jTrain.getTimeDeparting()); //st to hi
-                timeDeparting = Time.parseTime(jTrain.getTimeDeparting());
 
-            }
-
-
-
-
+            assert timeDeparting != null;
             Train train = new Train.Builder()
                     .withDestination(jTrain.getDestination())
                     .onPlatform(jTrain.getPlatform())
                     .addHowLong(howLong)
                     .timeDeparting(timeDeparting.toString()).build();
-
             trainList.add(train);
         }
-
         trainList.sort(new TrainComparator());
         return trainList;
     }

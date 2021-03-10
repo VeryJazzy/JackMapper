@@ -36,12 +36,13 @@ class Client {
         return JsonParser.parseTrainResponse(response, towards);
     }
 
-    public static ArrayList<Bus> getBusStop(String uri) {
-        return getBusStop(uri, Collections.emptyList());
+    public static ArrayList<Bus> getBusStop(String stopPoint) {
+
+        return getBusStop(stopPoint, Collections.emptyList());
     }
 
-    public static ArrayList<Bus> getBusStop(String uri, List<String> remove) {
-        String response = ExecuteGetRequest(uri);
+    public static ArrayList<Bus> getBusStop(String stopPoint, List<String> remove) {
+        String response = ExecuteGetRequest("https://api.tfl.gov.uk/StopPoint/" + stopPoint + "/Arrivals");
         ArrayList<Bus> busList = JsonParser.parseBusResponse(response);
         busList = removeBuses(busList, remove);
         return busList;

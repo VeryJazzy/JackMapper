@@ -17,7 +17,6 @@ public class JsonTrain {
     private String timeDeparting;
     @JsonProperty("expectedArrival")
     private String expectedArrival;
-
     @JsonProperty("expectedArrival")
     public String getExpectedArrival() {
         return expectedArrival;

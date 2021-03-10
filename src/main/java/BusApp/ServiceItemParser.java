@@ -14,6 +14,7 @@ public class ServiceItemParser {
             if (si.getDestination().getLocation().get(0).getLocationName().equals(destination)) {
 
                 boolean fast = checkIfFast(si); // check if: southend / colchester -> liverpoolStreet
+
                 String platform = si.getPlatform() == null ? "Platform Unknown" : si.getPlatform();
 
                 Train train = new Train.Builder()

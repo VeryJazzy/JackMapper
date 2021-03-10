@@ -10,44 +10,38 @@ import static BusApp.Client.getBusStop;
 import static BusApp.Client.getTrains;
 import static BusApp.SoapClient.getNationalRailTrains;
 
-
 @Controller
 public class MainController {
 
     @GetMapping("/getBusesToRomford")
     public String getBusesToRomford(Model model) {
-        model.addAttribute("morayWay", getBusStop("https://api.tfl.gov.uk/StopPoint/490010016S/Arrivals"));
-        model.addAttribute("belleVue", getBusStop("https://api.tfl.gov.uk/StopPoint/490003843W/Arrivals"));
-        model.addAttribute("collierRow", getBusStop("https://api.tfl.gov.uk/StopPoint/490005438J/Arrivals",
+        model.addAttribute("t1", "Moray Way");
+        model.addAttribute("morayWay", getBusStop("490010016S"));
+        model.addAttribute("t2", "Belle Vue Road");
+        model.addAttribute("belleVue", getBusStop("490003843W"));
+        model.addAttribute("t3", "Collier Row Roundabout");
+        model.addAttribute("collierRow", getBusStop("490005438J",
                 List.of("375")));
         return "index";
     }
 
     @GetMapping("/getBusesToHome")
     public String getBusesToHome(Model model) {
-        model.addAttribute("romfordStation", getBusStop("https://api.tfl.gov.uk/StopPoint/490001243V/Arrivals",
+        model.addAttribute("t4", "Romford Station");
+        model.addAttribute("romfordStation", getBusStop("490001243V",
                 List.of("174", "193", "370", "496", "498")));
 
-        model.addAttribute("westernRoad", getBusStop("https://api.tfl.gov.uk/StopPoint/490014452P/Arrivals",
+        model.addAttribute("t5", "Western Road");
+        model.addAttribute("westernRoad", getBusStop("490014452P",
                 List.of("296", "498", "66", "486", "375", "365", "86")));
 
-        model.addAttribute("romfordMarket", getBusStop("https://api.tfl.gov.uk/StopPoint/490011659H/Arrivals",
+        model.addAttribute("t6", "Romford Market");
+        model.addAttribute("romfordMarket", getBusStop("490011659H",
                 List.of("296", "66", "375")));
 
-        model.addAttribute("romfordPoliceStation", getBusStop("https://api.tfl.gov.uk/StopPoint/490011660NA/Arrivals",
+        model.addAttribute("t7", "Romford Police Station");
+        model.addAttribute("romfordPoliceStation", getBusStop("490011660NA",
                 List.of("498", "174")));
-        return "index";
-    }
-
-    @GetMapping("/getHAITrains")
-    public String getHighburyAndIslingtionTrains(Model model) {
-        model.addAttribute("HAITrains", getTrains("https://api.tfl.gov.uk/StopPoint/910GSTFD/ArrivalDepartures?lineIds=london-overground"));
-        return "index";
-    }
-
-    @GetMapping("/getHAItoStratfordTrains")
-    public String getHighburyAndIslingtionToStratfordTrains(Model model) {
-        model.addAttribute("HAItoStratfordTrains", getTrains("https://api.tfl.gov.uk/StopPoint/910GHGHI/Arrivals", "stratford"));
         return "index";
     }
 
@@ -59,7 +53,7 @@ public class MainController {
 
     @GetMapping("/getStratfordTrains")
     public String getStratfordTrains(Model model) {
-        model.addAttribute("stratfordTrains", getNationalRailTrains("SRA", "Shenfield"));
+        model.addAttribute("stratfordTrains", getNationalRailTrains("SRA", "Southend Victoria"));
         return "index";
     }
 
@@ -69,7 +63,19 @@ public class MainController {
         return "index";
     }
 
+    @GetMapping("/getStratfordToHAITrains")
+    public String getStratfordToHAITrains(Model model) {
+        model.addAttribute("StratfordToHAITrains", getTrains("https://api.tfl.gov.uk/StopPoint/910GSTFD/ArrivalDepartures?lineIds=london-overground",
+                "Highbury & Islington Rail Station"));
+        return "index";
+    }
 
+    @GetMapping("/getHAItoStratfordTrains")
+    public String getHighburyAndIslingtionToStratfordTrains(Model model) {
+        model.addAttribute("HAItoStratfordTrains", getTrains("https://api.tfl.gov.uk/StopPoint/910GHGHI/Arrivals",
+                "Stratford (London) Rail Station"));
+        return "index";
+    }
 
 
 

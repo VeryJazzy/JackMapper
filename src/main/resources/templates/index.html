@@ -11,6 +11,7 @@
     font-weight: bolder;
      display: block;
     }
+
     </style>
 </head>
 <body>
@@ -20,70 +21,74 @@
 </header>
 
 
-<a class="buttons" href="getBusesToRomford">Buses towards Romford</a>
-
-<h3>Moray Way</h3>
+<a class="buttons" href="getBusesToRomford">Buses --> Romford</a>
+<h3 th:text=${t1}></h3>
 <div th:each="bus : ${morayWay}">
     <p th:text="${bus.getInfo}"></p>
 </div>
-<h3>Belle Vue Road</h3>
+<h3 th:text=${t2}></h3>
 <div th:each="bus : ${belleVue}">
     <p th:text="${bus.getInfo}"></p>
 </div>
-<h3>Collier Row Roundabout</h3>
+<h3 th:text=${t3}></h3>
 <div th:each="bus : ${collierRow}">
     <p th:text="${bus.getInfo}"></p>
 </div>
 
-<br>
 
 
-<a class="buttons" href="getBusesToHome">Buses towards home</a>
 
-<h3>Romford Station</h3>
+<a class="buttons" href="getBusesToHome">Buses --> home</a>
+<h3 th:text=${t4}></h3>
 <div th:each="bus : ${romfordStation}">
     <p th:text="${bus.getInfo}"></p>
 </div>
-
-<h3>Western Road</h3>
+<h3 th:text=${t5}></h3>
 <div th:each="bus : ${westernRoad}">
     <p th:text="${bus.getInfo}"></p>
 </div>
-
-<h3>Romford Market</h3>
+<h3 th:text=${t6}></h3>
 <div th:each="bus : ${romfordMarket}">
     <p th:text="${bus.getInfo}"></p>
 </div>
-
-<h3>Romford Police Station</h3>
+<h3 th:text=${t7}></h3>
 <div th:each="bus : ${romfordPoliceStation}">
     <p th:text="${bus.getInfo}"></p>
 </div>
 
-<a class="buttons" href="getRomfordTrains">Romford Trains to London</a>
-<div th:each="tflTrain : ${romfordTrains}">
-    <p th:text="${tflTrain.getRailInfo}"></p>
-</div>
-
-<a class="buttons" href="getStratfordTrains">Stratford Trains to Romford</a>
-<div th:each="tflTrain : ${stratfordTrains}">
-    <p th:text="${tflTrain.getRailInfo}"></p>
-</div>
-
-<a class="buttons" href="getLiverpoolStreetTrains">Liverpool Street Trains to Romford</a>
-<div th:each="tflTrain : ${liverpoolStreetTrains}">
-    <p th:text="${tflTrain.getRailInfo}"></p>
-</div>
 
 
-<a class="buttons" href="getHAITrains">Stratford trains to Highbury And Islington</a>
-<div th:each="tflTrain : ${HAITrains}">
-    <p th:text="${tflTrain.getInfo}"></p>
+<a class="buttons" href="getRomfordTrains">Romford Trains --> London</a>
+<div th:each="Train : ${romfordTrains}">
+    <p th:text="${Train.getRailInfo}"></p>
 </div>
-<a class="buttons" href="getHAItoStratfordTrains">Highbury And Islington trains to stratford</a>
-<div th:each="tflTrain : ${HAItoStratfordTrains}">
-    <p th:text="${tflTrain.getInfo}"></p>
+
+<a class="buttons" href="getStratfordToHAITrains">Stratford trains --> Highbury And Islington</a>
+<div th:each="Train : ${StratfordToHAITrains}">
+    <p th:text="${Train.getInfo}"></p>
 </div>
+
+<br>
+<br>
+
+<a class="buttons" href="getHAItoStratfordTrains">Highbury And Islington trains --> stratford</a>
+<div th:each="Train : ${HAItoStratfordTrains}">
+    <p th:text="${Train.getInfo}"></p>
+</div>
+
+<a class="buttons" href="getLiverpoolStreetTrains">Liverpool Street Trains --> Romford</a>
+<div th:each="Train : ${liverpoolStreetTrains}">
+    <p th:text="${Train.getRailInfo}"></p>
+</div>
+
+<a class="buttons" href="getStratfordTrains">Stratford Trains --> Romford</a>
+<div th:each="Train : ${stratfordTrains}">
+    <p th:text="${Train.getRailInfo}"></p>
+</div>
+
+
+
+
 
 
 </body>

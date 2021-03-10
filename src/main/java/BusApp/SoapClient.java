@@ -64,6 +64,8 @@ public class SoapClient {
     private static List<ServiceItem> getDepartures(AccessToken accessToken, LDBServiceSoap soapService, String crs) {
         GetBoardRequestParams params = new GetBoardRequestParams();
         params.setCrs(crs);
+
+
         StationBoardResponseType departureBoard = soapService.getDepartureBoard(params, accessToken);
         return departureBoard.getGetStationBoardResult().getTrainServices().getService();
     }
