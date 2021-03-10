@@ -10,6 +10,8 @@ public class ServiceItemParser {
     public static ArrayList<Train> parseServiceItem(List<ServiceItem> serviceItemList, String destination) {
         ArrayList<Train> trainList = new ArrayList<>();
 
+
+
         for (ServiceItem si : serviceItemList) {
             if (si.getDestination().getLocation().get(0).getLocationName().equals(destination)) {
 
@@ -29,6 +31,8 @@ public class ServiceItemParser {
         }
         return trainList;
     }
+
+
 
     public static boolean checkIfFast(ServiceItem si) {
         if (si.getOrigin().getLocation().get(0).getCrs().equals("CET") || si.getOrigin().getLocation().get(0).getCrs().equals("SOV")) {
