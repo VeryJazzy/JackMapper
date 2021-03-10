@@ -53,7 +53,7 @@ public class MainController {
 
     @GetMapping("/getStratfordTrains")
     public String getStratfordTrains(Model model) {
-        model.addAttribute("stratfordTrains", getNationalRailTrains("SRA", "Southend Victoria"));
+        model.addAttribute("stratfordTrains", getNationalRailTrains("SRA", "Shenfield"));
         return "index";
     }
 

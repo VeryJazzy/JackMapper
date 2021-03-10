@@ -71,19 +71,19 @@ public class SoapClient {
     }
 
 
-    public static ArrayList<String> getServiceIds(String crs, String destination) {
-        ArrayList<Train> trainList = null;
-        try {
-            List<ServiceItem> serviceItemList = SoapClient.getDepartureBoards(crs);
-            assert serviceItemList != null;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-        return null;
-    }
+//    public static ArrayList<String> getServiceIds(String crs, String destination) {
+//        ArrayList<Train> trainList = null;
+//        try {
+//            List<ServiceItem> serviceItemList = SoapClient.getDepartureBoards(crs);
+//            assert serviceItemList != null;
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//
+//        return null;
+//    }
 
     public static ArrayList<Train> getNationalRailTrains(String crs, String destination) {
         ArrayList<Train> trainList = null;

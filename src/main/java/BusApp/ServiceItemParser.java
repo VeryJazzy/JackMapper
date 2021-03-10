@@ -10,13 +10,10 @@ public class ServiceItemParser {
     public static ArrayList<Train> parseServiceItem(List<ServiceItem> serviceItemList, String destination) {
         ArrayList<Train> trainList = new ArrayList<>();
 
-
-
         for (ServiceItem si : serviceItemList) {
             if (si.getDestination().getLocation().get(0).getLocationName().equals(destination)) {
 
                 boolean fast = checkIfFast(si); // check if: southend / colchester -> liverpoolStreet
-
                 String platform = si.getPlatform() == null ? "Platform Unknown" : si.getPlatform();
 
                 Train train = new Train.Builder()
@@ -24,6 +21,7 @@ public class ServiceItemParser {
                         .onPlatform(platform)
                         .isOnTime(si.getEtd())
                         .timeDeparting(si.getStd())
+
                         .isFast(fast)
                         .build();
                 trainList.add(train);
