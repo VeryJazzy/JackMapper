@@ -64,35 +64,66 @@ public class SoapClient {
     private static List<ServiceItem> getDepartures(AccessToken accessToken, LDBServiceSoap soapService, String crs) {
         GetBoardRequestParams params = new GetBoardRequestParams();
         params.setCrs(crs);
-
-
         StationBoardResponseType departureBoard = soapService.getDepartureBoard(params, accessToken);
         return departureBoard.getGetStationBoardResult().getTrainServices().getService();
     }
 
+    public static List<Train> getNationalRailTrains(String crs, String direction) {
+        List<Train> trainList = null;
+        try {
+            List<ServiceItem> fullServiceItemList = SoapClient.getDepartureBoards(crs);
+            assert fullServiceItemList != null;
+            trainList = filterTrains(fullServiceItemList, direction);
 
-//    public static ArrayList<String> getServiceIds(String crs, String destination) {
-//        ArrayList<Train> trainList = null;
-//        try {
-//            List<ServiceItem> serviceItemList = SoapClient.getDepartureBoards(crs);
-//            assert serviceItemList != null;
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//
-//        return null;
-//    }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return trainList;
+    }
 
-    public static ArrayList<Train> getNationalRailTrains(String crs, String destination) {
-        ArrayList<Train> trainList = null;
+    public static List<Train> filterTrains(List<ServiceItem> serviceItemList, String direction) {
+        List<Train> trainList;
+
+        if (direction.equals("Shenfield")) { //homebound
+            ArrayList<String> fastServiceItemIDs = getFastServiceItems("RMF", List.of("Southend Victoria", "Colchester Town"));
+            trainList = populateTrainList(serviceItemList, direction, true);
+        } else {
+            trainList = populateTrainList(serviceItemList, direction, false);
+        }
+        return trainList;
+    }
+
+    public static ArrayList<String> getFastServiceItems(String crs, List<String> destination) {
+        ArrayList<String> fastIDs = new ArrayList<>();
         try {
             List<ServiceItem> serviceItemList = SoapClient.getDepartureBoards(crs);
             assert serviceItemList != null;
-            trainList = ServiceItemParser.parseServiceItem(serviceItemList, destination);
+
+            for (ServiceItem si : serviceItemList) {
+                for (String des : destination) {
+                    if (si.getDestination().getLocation().get(0).getLocationName().equals(des)) {
+                        fastIDs.add(si.getRsid());
+                    }
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        return fastIDs;
+    }
+
+    public static List<Train> populateTrainList(List<ServiceItem> serviceItemList, String destination, boolean homeBound) {
+        List<Train> trainList = new ArrayList<>();
+
+        List<String> fastServiceItemIDs = homeBound ?
+                getFastServiceItems("RMF", List.of("Southend Victoria", "Colchester Town")) :
+                new ArrayList<>();
+
+        for (ServiceItem si : serviceItemList) {
+            if (fastServiceItemIDs.contains(si.getRsid()) || si.getDestination().getLocation().get(0).getLocationName().equals(destination)) {
+                Train train = ParseServiceItem.toTrain(si);
+                trainList.add(train);
+            }
         }
         return trainList;
     }
