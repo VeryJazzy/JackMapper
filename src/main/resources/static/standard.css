@@ -1,0 +1,74 @@
+@font-face{
+  font-family: 'JetBrainsMono';
+  src: url('https://cdn.jsdelivr.net/gh/JetBrains/JetBrainsMono/web/woff2/JetBrainsMono-Regular.woff2') format('woff2'),
+    url('https://cdn.jsdelivr.net/gh/JetBrains/JetBrainsMono/web/woff/JetBrainsMono-Regular.woff') format('woff'),
+    url('https://cdn.jsdelivr.net/gh/JetBrains/JetBrainsMono/ttf/JetBrainsMono-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+    background-color: #2B2B2B;
+    font-family: JetBrainsMono;
+    color: #BBBBBB;
+}
+
+h1 {
+  color: #E8BF6A;
+  font-size: 30px;
+}
+
+h2 {
+  color: #E8BF6A;
+  font-size: 30px;
+}
+
+a {
+   display: block;
+}
+
+p {
+   color: #d1d1d1;
+   font-size: 20px;
+}
+
+.button {
+   color: #559752;
+   text-decoration: none;
+   font-size: 30px;
+}
+
+.button.visited {
+   color: #559752;
+}
+
+.button.hover {
+   color: #559752;
+}
+
+.homeButton {
+  color: #CC7832;
+  font-size: 100px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+@media only screen and (max-width: 980px) and (min-height: 1500px) {
+
+
+  .homeButton {
+    font-size: 157px;
+  }
+  h1 {
+    font-size: 6em;
+  }
+  h2 {
+    font-size: 4em;
+  }
+  .button {
+    font-size: 4em;
+  }
+ p {
+    font-size: 1em;
+    line-height: 130%;
+ }

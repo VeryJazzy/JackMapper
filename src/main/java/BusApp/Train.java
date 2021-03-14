@@ -35,8 +35,7 @@ public class Train {
         }
 
         public Builder onPlatform(String platform) {
-            this.platform = platform.equals("Platform Unknown") ? "NA" : platform;
-
+            this.platform = platform.equals("Platform Unknown") ? "Platform NA" : "Platform " + platform;
             return this;
         }
 
@@ -79,7 +78,8 @@ public class Train {
     private String onTime;
     private boolean fast;
 
-    private Train() {}
+    private Train() {
+    }
 
     public String getDestination() {
         return destination;
@@ -115,30 +115,17 @@ public class Train {
     }
 
     public String getInfo() {
-        return timeArriving + " " + destination + ", " + platform;
+        return timeArriving + " ------ "+ platform;
     }
 
     public String getRailInfo() {
-        StringBuilder builder = new StringBuilder();
-        builder.append(fast ? "FAST " : "");
-        builder.append(timeArriving).append(" Platform ").append(platform);
+        StringBuilder builder = new StringBuilder(timeArriving);
+        builder.append(fast ? " -FAST- " : " ------ ");
+        builder.append(platform);
         builder.append(!onTime.equals("On time") ? " <Delayed: " + onTime + ">" : "");
+
         return builder.toString();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

@@ -51,19 +51,27 @@ public class JsonParser {
                     }
                     howLong = Time.howLong(jTrain.getTimeDeparting()); //st to hi
                     timeDeparting = Time.parseTime(jTrain.getTimeDeparting());
+
                     break;
             }
 
             assert timeDeparting != null;
             Train train = new Train.Builder()
                     .withDestination(jTrain.getDestination())
-                    .onPlatform(jTrain.getPlatform())
+                    .onPlatform(formatPlatform(jTrain.getPlatform()))
                     .addHowLong(howLong)
                     .timeDeparting(timeDeparting.toString()).build();
             trainList.add(train);
         }
         trainList.sort(new TrainComparator());
         return trainList;
+    }
+
+    private static String formatPlatform(String platform) {
+        if (!platform.equals("Platform Unknown")) {
+            return platform.substring(8);
+        }
+        return platform;
     }
 
 

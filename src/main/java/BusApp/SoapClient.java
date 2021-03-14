@@ -124,6 +124,9 @@ public class SoapClient {
                 Train train = ParseServiceItem.toTrain(si);
                 trainList.add(train);
             }
+            if (trainList.size() == 10) {
+                return trainList;
+            }
         }
         return trainList;
     }

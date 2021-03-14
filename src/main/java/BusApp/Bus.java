@@ -60,12 +60,13 @@ public class Bus {
     }
 
     public String getInfo() {
-        StringBuilder info = new StringBuilder(this.name + ": ");
+        StringBuilder info = new StringBuilder(this.name + ": ---- ");
 
         for (int i = 0; i < howLongs.size(); i++) {
             info.append(howLongs.get(i).equals(0) ? "due" : howLongs.get(i));
-            info.append(i == howLongs.size() - 1 ? " minutes" : ", ");
+            info.append(i == howLongs.size() - 1 ? "" : ", ");
         }
+
         return info.toString();
     }
 

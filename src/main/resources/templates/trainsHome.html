@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>Bus App</title>
+    <link rel="stylesheet" href="/standard.css">
+</head>
+<body>
+
+<header>
+    <a class="homeButton" href="/">JackMapper</a>
+</header>
+
+<h2>Stratford --> Romford</h2>
+<div th:each="Train : ${stratfordTrains}">
+    <p th:text="${Train.getRailInfo}"></p>
+</div>
+
+<h2>Liverpool Street --> Romford</h2>
+<div th:each="Train : ${liverpoolStreetTrains}">
+    <p th:text="${Train.getRailInfo}"></p>
+</div>
+
+<h2 >Highbury & Islington --> Stratford</h2>
+<div th:each="Train : ${HAItoStratfordTrains}">
+    <p th:text="${Train.getInfo}"></p>
+</div>
+
+<br>
+
+
+
+
+
+
+</body>
+</html>
