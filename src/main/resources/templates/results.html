@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>Bus App</title>
+    <link rel="stylesheet" href="/standard.css">
+</head>
+<body>
+<header>
+    <a class="homeButton" href="/">JackMapper</a>
+</header>
+
+
+<h2 th:text=${t4}></h2>
+<div th:each="bus : ${romfordStation}">
+    <p th:text="${bus.getInfo}"></p>
+</div>
+<h2 th:text=${t5}></h2>
+<div th:each="bus : ${westernRoad}">
+    <p th:text="${bus.getInfo}"></p>
+</div>
+<h2 th:text=${t6}></h2>
+<div th:each="bus : ${romfordMarket}">
+    <p th:text="${bus.getInfo}"></p>
+</div>
+<h2 th:text=${t7}></h2>
+<div th:each="bus : ${romfordPoliceStation}">
+    <p th:text="${bus.getInfo}"></p>
+</div>
+
+
+
+
+<h2 th:text=${t1}></h2>
+<div th:each="bus : ${morayWay}">
+    <p th:text="${bus.getInfo}"></p>
+</div>
+<h2 th:text=${t2}></h2>
+<div th:each="bus : ${belleVue}">
+    <p th:text="${bus.getInfo}"></p>
+</div>
+<h2 th:text=${t3}></h2>
+<div th:each="bus : ${collierRow}">
+    <p th:text="${bus.getInfo}"></p>
+</div>
+
+
+
+
+
+
+
+
+
+
+<h2 th:text=${t8}></h2>
+<div th:each="Train : ${romfordTrains}">
+    <p th:text="${Train.getRailInfo}"></p>
+</div>
+
+<h2 th:text=${t9}></h2>
+<div th:each="Train : ${StratfordToHAITrains}">
+    <p th:text="${Train.getInfo}"></p>
+</div>
+
+
+
+
+
+
+<h2 th:text=${t10}></h2>
+<div th:each="Train : ${stratfordTrains}">
+    <p th:text="${Train.getRailInfo}"></p>
+</div>
+
+<h2 th:text=${t11}></h2>
+<div th:each="Train : ${liverpoolStreetTrains}">
+    <p th:text="${Train.getRailInfo}"></p>
+</div>
+
+<h2 th:text=${t12}></h2>
+<div th:each="Train : ${HAItoStratfordTrains}">
+    <p th:text="${Train.getInfo}"></p>
+</div>
+
+<br>
+
+</body>
+</html>

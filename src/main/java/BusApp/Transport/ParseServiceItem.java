@@ -1,4 +1,4 @@
-package BusApp;
+package BusApp.Transport;
 
 import com.thalesgroup.rtti._2017_10_01.ldb.types.ServiceItem;
 
@@ -13,6 +13,7 @@ public class ParseServiceItem {
                 .onPlatform(platform)
                 .isOnTime(si.getEtd())
                 .timeDeparting(si.getStd())
+                .addHowLong(Time.howLongForSiStd(si.getStd()))
                 .isFast(fast)
                 .build();
     }

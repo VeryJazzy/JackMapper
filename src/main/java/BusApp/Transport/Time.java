@@ -1,4 +1,4 @@
-package BusApp;
+package BusApp.Transport;
 
 import java.time.Duration;
 import java.time.LocalTime;
@@ -10,9 +10,9 @@ public class Time {
     }
 
     public static LocalTime parseTime(String expectedArrival) {
-        int hour = Integer.parseInt(expectedArrival.substring(11,13));
-        int minute = Integer.parseInt(expectedArrival.substring(14,16));
-        int seconds = Integer.parseInt(expectedArrival.substring(17,19));
+        int hour = Integer.parseInt(expectedArrival.substring(11, 13));
+        int minute = Integer.parseInt(expectedArrival.substring(14, 16));
+        int seconds = Integer.parseInt(expectedArrival.substring(17, 19));
         return LocalTime.of(hour, minute, seconds);
     }
 
@@ -27,6 +27,11 @@ public class Time {
         return (int) Math.round(difference);
     }
 
+    public static int howLongForSiStd(String expectedArrival) {
+        LocalTime conv = LocalTime.of(Integer.parseInt(expectedArrival.substring(0, 2)), Integer.parseInt(expectedArrival.substring(3, 5)));
+        return (int) Math.round(getDifference(conv, LocalTime.now()));
+
+    }
 
 
 }

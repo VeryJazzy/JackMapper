@@ -1,6 +1,6 @@
 package BusApp.Json;
 
-import BusApp.*;
+import BusApp.Transport.*;
 
 import java.time.LocalTime;
 import java.util.*;

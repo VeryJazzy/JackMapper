@@ -1,4 +1,4 @@
-package BusApp;
+package BusApp.Transport;
 
 import java.util.Comparator;
 

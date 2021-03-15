@@ -1,4 +1,4 @@
-package BusApp;
+package BusApp.Transport;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -115,14 +115,17 @@ public class Train {
     }
 
     public String getInfo() {
-        return timeArriving + " ------ "+ platform;
+        return timeArriving + " ------ " + platform;
     }
 
-    public String getRailInfo() {
+    public String getRailInfo(boolean showHowLong) {
         StringBuilder builder = new StringBuilder(timeArriving);
         builder.append(fast ? " -FAST- " : " ------ ");
         builder.append(platform);
         builder.append(!onTime.equals("On time") ? " <Delayed: " + onTime + ">" : "");
+        if (showHowLong) {
+            builder.append(howLongs.get(0)).append("min");
+        }
 
         return builder.toString();
     }

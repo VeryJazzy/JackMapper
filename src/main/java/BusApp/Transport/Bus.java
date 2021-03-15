@@ -1,4 +1,4 @@
-package BusApp;
+package BusApp.Transport;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
