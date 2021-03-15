@@ -114,19 +114,29 @@ public class Train {
         return false;
     }
 
-    public String getInfo() {
-        return timeArriving + " ------ " + platform;
+    public String getInfo(boolean showCountDown) {
+        StringBuilder builder = new StringBuilder(timeArriving);
+        builder.append(" ------ ");
+        builder.append(platform);
+
+        if (showCountDown) {
+            builder.append(" -> ");
+            builder.append(howLongs.get(0) == 0 ? "due" : howLongs.get(0) + " min");
+        }
+        return builder.toString();
     }
 
-    public String getRailInfo(boolean showHowLong) {
+    public String getRailInfo(boolean showCountDown) {
         StringBuilder builder = new StringBuilder(timeArriving);
         builder.append(fast ? " -FAST- " : " ------ ");
         builder.append(platform);
-        builder.append(!onTime.equals("On time") ? " <Delayed: " + onTime + ">" : "");
-        if (showHowLong) {
-            builder.append(howLongs.get(0)).append("min");
+
+        if (showCountDown) {
+            builder.append(" -> ")
+                    .append(howLongs.get(0).equals(0) ? "due" : howLongs.get(0) + " min");
         }
 
+        builder.append(!onTime.equals("On time") ? " <Delayed: " + onTime + ">" : "");
         return builder.toString();
     }
 

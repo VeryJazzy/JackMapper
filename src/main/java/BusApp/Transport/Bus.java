@@ -66,7 +66,6 @@ public class Bus {
             info.append(howLongs.get(i).equals(0) ? "due" : howLongs.get(i));
             info.append(i == howLongs.size() - 1 ? "" : ", ");
         }
-
         return info.toString();
     }
 

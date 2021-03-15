@@ -65,7 +65,7 @@ public class MainController {
         model.addAttribute("t12", "Highbury & Islington --> Stratford");
         model.addAttribute("HAItoStratfordTrains", TflTransport.getTrains("https://api.tfl.gov.uk/StopPoint/910GHGHI/Arrivals",
                 "Stratford (London) Rail Station"));
-        return "trainsHome";
+        return "results";
     }
 
 
