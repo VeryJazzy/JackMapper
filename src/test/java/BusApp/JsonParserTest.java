@@ -21,8 +21,8 @@ class JsonParserTest {
     @Test
     void parseJsonReturnsCorrectBuses() {
         List<Bus> busList = JsonParser.parseBusResponse(testJson);
-        assertEquals(busList.get(0).getName(), "103");
-        assertEquals(busList.get(1).getName(), "499");
+        assertEquals(busList.get(0).getName(), "499");
+        assertEquals(busList.get(1).getName(), "103");
     }
 
 }

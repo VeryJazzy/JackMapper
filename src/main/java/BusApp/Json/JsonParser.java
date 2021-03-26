@@ -61,10 +61,26 @@ public class JsonParser {
                     .onPlatform(formatPlatform(jTrain.getPlatform()))
                     .addHowLong(howLong)
                     .timeDeparting(timeDeparting.toString()).build();
+
+            if (HasTrainProbablyAlreadyLeft(train)) {
+                continue;
+            }
+
             trainList.add(train);
         }
         trainList.sort(new TrainComparator());
         return trainList;
+    }
+
+    private static boolean HasTrainProbablyAlreadyLeft(Train train) {
+        LocalTime eta = LocalTime.of(
+                Integer.parseInt(train.getTimeArriving().substring(0, 2)),
+                Integer.parseInt(train.getTimeArriving().substring(3))).plusMinutes(1); // pushed up 1 min
+
+        if (LocalTime.now().isAfter(eta)) {
+            return true;
+        }
+        return false;
     }
 
     private static String formatPlatform(String platform) {

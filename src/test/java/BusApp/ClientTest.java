@@ -1,5 +1,0 @@
-package BusApp;
-
-class ClientTest {
-
-}

@@ -94,6 +94,10 @@ public class Train {
         return howLongs;
     }
 
+    public String getTimeArriving() {
+        return timeArriving;
+    }
+
     @Override
     public String toString() {
         return destination;

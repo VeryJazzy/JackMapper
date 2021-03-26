@@ -16,19 +16,19 @@ class TimeTest {
                 LocalTime.of(11,15,54));
     }
 
-    @Test
-    void testGetDifference() {
-        LocalTime now = LocalTime.of(11, 2,30);
-        LocalTime expected = LocalTime.of(11,14,50);
-        assertEquals(Time.getDifference(expected, now), 12);
-    }
-
-    @Test
-    void testGetDifferenceAgain() {
-        LocalTime now = LocalTime.of(10, 50,30);
-        LocalTime expected = LocalTime.of(11,10,50);
-        assertEquals(Time.getDifference(expected,now),20);
-    }
+//    @Test
+//    void testGetDifference() {
+//        LocalTime now = LocalTime.of(11, 2,30);
+//        LocalTime expected = LocalTime.of(11,14,50);
+//        assertEquals(Time.getDifference(expected, now), 12);
+//    }
+//
+//    @Test
+//    void testGetDifferenceAgain() {
+//        LocalTime now = LocalTime.of(10, 50,30);
+//        LocalTime expected = LocalTime.of(11,10,50);
+//        assertEquals(Time.getDifference(expected,now),20);
+//    }
 
 
 
