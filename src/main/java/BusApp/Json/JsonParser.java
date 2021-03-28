@@ -43,6 +43,7 @@ public class JsonParser {
                     }
                     howLong = Time.howLong(jTrain.getExpectedArrival());// hi to st
                     timeDeparting = Time.parseTime(jTrain.getExpectedArrival());
+                    timeDeparting = timeDeparting.plusHours(1); //timezone hack
                     break;
 
                 case "Highbury & Islington Rail Station":
@@ -51,7 +52,7 @@ public class JsonParser {
                     }
                     howLong = Time.howLong(jTrain.getTimeDeparting()); //st to hi
                     timeDeparting = Time.parseTime(jTrain.getTimeDeparting());
-
+                    timeDeparting = timeDeparting.plusHours(1); //timezone hack
                     break;
             }
 
@@ -60,7 +61,8 @@ public class JsonParser {
                     .withDestination(jTrain.getDestination())
                     .onPlatform(formatPlatform(jTrain.getPlatform()))
                     .addHowLong(howLong)
-                    .timeDeparting(timeDeparting.toString()).build();
+                    .timeDeparting(timeDeparting.toString())
+                    .build();
 
             if (HasTrainProbablyAlreadyLeft(train)) {
                 continue;

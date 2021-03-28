@@ -23,6 +23,9 @@ public class Time {
 
     public static int howLong(String expectedArrival) {
         LocalTime expected = parseTime(expectedArrival);
+        expected = expected.plusHours(1); //timezone hack
+
+
         if (LocalTime.now().isAfter(expected)) {
             return 0;
         }
