@@ -60,7 +60,13 @@ public class NationalRailTransport {
                 new ArrayList<>();
 
         for (ServiceItem si : serviceItemList) {
-            if (fastServiceItemIDs.contains(si.getRsid()) || si.getDestination().getLocation().get(0).getLocationName().equals(destination)) {
+            if (destination.equals("London Liverpool Street")) {
+                if (fastServiceItemIDs.contains(si.getRsid()) || si.getDestination().getLocation().get(0).getLocationName().equals(destination)
+                        || si.getDestination().getLocation().get(0).getLocationName().equals("Stratford (London)")) {
+                    Train train = ParseServiceItem.toTrain(si);
+                    trainList.add(train);
+                }
+            } else if (fastServiceItemIDs.contains(si.getRsid()) || si.getDestination().getLocation().get(0).getLocationName().equals(destination)) {
                 Train train = ParseServiceItem.toTrain(si);
                 trainList.add(train);
             }
