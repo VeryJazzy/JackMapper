@@ -65,48 +65,4 @@ public class MainController {
                 "Stratford (London) Rail Station"));
         return "results";
     }
-
-
-
-
-
-
-
-
-
-//    @GetMapping("/getRomfordTrains")
-//    public String getRomfordTrains(Model model) {
-//        model.addAttribute("romfordTrains", SoapClient.getNationalRailTrains("RMF", "London Liverpool Street"));
-//        return "trainsToLondon";
-//    }
-//
-//    @GetMapping("/getStratfordToHAITrains")
-//    public String getStratfordToHAITrains(Model model) {
-//        model.addAttribute("StratfordToHAITrains", Client.getTrains("https://api.tfl.gov.uk/StopPoint/910GSTFD/ArrivalDepartures?lineIds=london-overground",
-//                "Highbury & Islington Rail Station"));
-//        return "trainsToLondon";
-//    }
-
-
-
-
-//    @GetMapping("/getStratfordTrains")
-//    public String getStratfordTrains(Model model) {
-//        model.addAttribute("stratfordTrains", SoapClient.getNationalRailTrains("SRA", "Shenfield"));
-//        return "trainsHome";
-//    }
-//
-//    @GetMapping("/getLiverpoolStreetTrains")
-//    public String getLiverpoolStreetTrains(Model model) {
-//        model.addAttribute("liverpoolStreetTrains", SoapClient.getNationalRailTrains("LST", "Shenfield"));
-//        return "trainsHome";
-//    }
-//
-//    @GetMapping("/getHAItoStratfordTrains")
-//    public String getHighburyAndIslingtionToStratfordTrains(Model model) {
-//        model.addAttribute("HAItoStratfordTrains", Client.getTrains("https://api.tfl.gov.uk/StopPoint/910GHGHI/Arrivals",
-//                "Stratford (London) Rail Station"));
-//        return "trainsHome";
-//    }
-
 }

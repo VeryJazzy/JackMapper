@@ -54,6 +54,9 @@ public class NationalRailTransport {
     }
 
     public static List<Train> populateTrainList(List<ServiceItem> serviceItemList, String destination, boolean homeBound) {
+
+        //refactor needed
+
         List<Train> trainList = new ArrayList<>();
         List<String> fastServiceItemIDs = homeBound ?
                 getFastServiceItems("RMF", List.of("Southend Victoria", "Colchester Town")) :
@@ -74,6 +77,9 @@ public class NationalRailTransport {
                 return trainList;
             }
         }
+
+        //refactor needed
+
         return trainList;
     }
 
